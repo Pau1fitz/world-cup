@@ -17,7 +17,7 @@ export default class Fixtures extends Component {
         fixtures: res
       })
     }).catch(err => {
-      console.warn(err)
+      console.warn(err) 
     })
   }
 
