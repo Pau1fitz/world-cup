@@ -40,9 +40,15 @@ export default class Fixtures extends Component {
                   <Date>{moment(fixture.kickOffTime).format('ddd Do MMM')}</Date>
                 )}
                 <FixtureTextContainer>
-                  <TeamText>{fixtureText[0]}</TeamText>
-                  <FixtureText>{moment(fixture.kickOffTime).format('HH:mm')}</FixtureText>
-                  <TeamText>{fixtureText[1]}</TeamText>
+                  <FlexView>
+                    <TeamText>{fixtureText[0]}</TeamText>
+                  </FlexView>
+                  <FlexView>
+                    <FixtureText>{moment(fixture.kickOffTime).format('HH:mm')}</FixtureText>
+                  </FlexView>
+                  <FlexView>
+                    <TeamText>{fixtureText[1]}</TeamText>
+                  </FlexView>
                 </FixtureTextContainer>
               </View>
             )
@@ -74,16 +80,22 @@ const FixtureTextContainer = styled.View`
   display: flex;
   flex-direction: row;
   justify-content: center;
+  width: 100%;
 `
-  
-  const FixtureText = styled.Text`
+
+const FlexView = styled.View`
+  display: flex;
+  flex-direction: row;
+`
+const FixtureText = styled.Text`
   color: rgb(51, 51, 51);
   padding: 10px;
-  text-align: center;
+  flex-basis: 20%;
 `
 
 const TeamText = styled.Text`
   color: rgb(51, 51, 51);
   padding: 10px;
   font-weight: 800;
+  flex-basis: 33.333%;
 `
