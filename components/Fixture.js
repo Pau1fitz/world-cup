@@ -3,7 +3,6 @@ import { Text, Image, View, ScrollView} from 'react-native'
 import styled from 'styled-components'
 import moment from 'moment'
 
-
 export default class Fixtures extends Component {
 
   static navigationOptions = {
@@ -15,15 +14,10 @@ export default class Fixtures extends Component {
   }
 
   componentDidMount() {
-
     const { navigation } = this.props
-
-    console.log(`http://localhost:5000/form/${navigation.getParam('home')}/${navigation.getParam('away')}`)
-
     fetch(`http://localhost:5000/form/${navigation.getParam('home')}/${navigation.getParam('away')}`).then(res => {
       return res.json()
     }).then(res => {
-      console.log(res)
       this.setState({
         form: res
       })
