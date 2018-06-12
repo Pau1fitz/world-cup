@@ -31,7 +31,8 @@ export default class Fixtures extends Component {
         <ScrollView>
           {fixtures.map((f, i) => {
             const fixtureText = f.fixture.trim().split(' v ')
-            const logo = `../images/${fixtureText[0].toLowerCase().replace(/ /g,'')}.png`
+            const logoHome = `https://raw.githubusercontent.com/Pau1fitz/world-cup/master/images/${fixtureText[0].toLowerCase().replace(/ /g,'')}.png`
+            const logoAway = `https://raw.githubusercontent.com/Pau1fitz/world-cup/master/images/${fixtureText[1].toLowerCase().replace(/ /g,'')}.png`
             return (
               <View key={f.fixture}>
                 {i == 0 && (
@@ -42,9 +43,8 @@ export default class Fixtures extends Component {
                 )}
                 <FixtureTextContainer>
                   <FlexView>
-                  <Image
-                    style={{width: 20, height: 20}}
-                    source={require('../images/argentina.png')}
+                  <Flag
+                    source={{uri: logoHome}}
                   />
                     <TeamText>{fixtureText[0]}</TeamText>
                   </FlexView>
@@ -53,6 +53,9 @@ export default class Fixtures extends Component {
                   </FlexView>
                   <FlexView>
                     <TeamText>{fixtureText[1]}</TeamText>
+                    <Flag
+                      source={{uri: logoAway}}
+                    />
                   </FlexView>
                 </FixtureTextContainer>
               </View>
@@ -84,6 +87,7 @@ const Date = styled.Text`
 const Flag = styled.Image`
   width: 20px;
   height: 20px;
+  align-self: center;
 `
 
 const FixtureTextContainer = styled.View`
@@ -100,12 +104,12 @@ const FlexView = styled.View`
 const FixtureText = styled.Text`
   color: rgb(51, 51, 51);
   padding: 10px;
-  flex-basis: 29%;
+  flex-basis: 20%;
 `
 
 const TeamText = styled.Text`
   color: rgb(51, 51, 51);
   padding: 10px;
   font-weight: 800;
-  flex-basis: 33.333%;
+  flex-basis: 32%;
 `
