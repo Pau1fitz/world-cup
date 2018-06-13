@@ -30,6 +30,7 @@ export default class Fixtures extends Component {
     const { form } = this.state
     return (
       <FixtureView>
+        <Test>
         {
           form.map(item => {
             return (
@@ -38,6 +39,15 @@ export default class Fixtures extends Component {
                   <Flag source={{uri: `https://raw.githubusercontent.com/Pau1fitz/world-cup/master/images/${item.team.toLowerCase().replace(/ /g,'')}.png`}}/>
                   <CountryName>{item.team}</CountryName>
                 </CountryView>
+              </View>
+            )
+          })
+        }
+        </Test>
+        {
+          form.map(item => {
+            return (
+              <View key={item.team}>
                 {item.results.map(result => {
                   const winLossDraw = result.form.replace(/"/g,"")
                   const date = result.date.split('/')
@@ -79,6 +89,10 @@ export default class Fixtures extends Component {
 
 const FixtureView = styled.ScrollView`
   margin: 10px;
+`
+const Test = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
 `
 const CountryView = styled.View`
   flex-direction: row;
