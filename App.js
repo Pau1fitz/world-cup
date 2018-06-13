@@ -34,7 +34,7 @@ const RootStack = createStackNavigator(
     Groups: Groups,
   },
   {
-    initialRouteName: 'Fixtures',
+    initialRouteName: 'Groups',
     navigationOptions: {
       headerStyle: {
         backgroundColor: '#6555DC',

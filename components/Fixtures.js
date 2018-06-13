@@ -28,9 +28,7 @@ export default class Fixtures extends Component {
   }
 
   render() {
-
     const { fixtures } = this.state;
-
     const result = Object.values(fixtures.reduce((c, v) => {
       let t = v['kickOffTime'].split('T', 1)[0];
       c[t] = c[t] || {date: t,fixtures: []}
@@ -53,7 +51,8 @@ export default class Fixtures extends Component {
                       const fixtureText = f.fixture.trim().split(' v ')
                       const logoHome = `https://raw.githubusercontent.com/Pau1fitz/world-cup/master/images/${fixtureText[0].toLowerCase().replace(/ /g,'')}.png`
                       const logoAway = `https://raw.githubusercontent.com/Pau1fitz/world-cup/master/images/${fixtureText[1].toLowerCase().replace(/ /g,'')}.png`
-                      
+                      const group = f.group
+
                       return (
                         <TouchableWithoutFeedback
                           key={i}
@@ -62,7 +61,8 @@ export default class Fixtures extends Component {
                             this.props.navigation.navigate('Fixture', {
                             home: fixtureText[0],
                             away: fixtureText[1],
-                            date
+                            date,
+                            group
                           });
                         }}
                       >
@@ -85,7 +85,6 @@ export default class Fixtures extends Component {
                   }
                   </FixtureContainer>
                 </View>
-          
               )
             })
           }
@@ -121,7 +120,7 @@ const Date = styled.Text`
 `
 const Flag = styled.Image`
   width: 26px;
-  height: 25px;
+  height: 26px;
   align-self: center;
 `
 const FixtureTextContainer = styled.View`
