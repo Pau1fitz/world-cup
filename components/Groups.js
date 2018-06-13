@@ -29,63 +29,97 @@ export default class Groups extends Component {
     
     const {groups} = this.state
     return(
-      <View>
+      <ScrollView>
         {groups.map(group => {
           return (
             <View key={group.groupName}>
-              <Text>Group {group.groupName}</Text>
-              <Table>
+              <GroupHeaderText>Group {group.groupName}</GroupHeaderText>
+              <View>
                 <GroupView>
+                  <GroupHeader>
+                    <IconDummy />
+                    <TeamDummy>Teams</TeamDummy>
+                    <GroupHeaderWLD>D</GroupHeaderWLD>
+                    <GroupHeaderWLD>L</GroupHeaderWLD>
+                    <GroupHeaderWLD>W</GroupHeaderWLD>
+                    <GroupHeaderWLD>Pts</GroupHeaderWLD>
+                  </GroupHeader>
                   {group.teams.map(team => {
                     const logo = `https://raw.githubusercontent.com/Pau1fitz/world-cup/master/images/${team.name.toLowerCase().replace(/ /g,'')}.png`
                     return (
                       <TeamView key={team.name}>
                         <Flag source={{uri: logo}}/>
-                        <TeamText>{team.name}</TeamText>
-                        <TeamText>{team.won}</TeamText>
+                        <TeamNameText>{team.name}</TeamNameText>
                         <TeamText>{team.draw}</TeamText>
                         <TeamText>{team.loss}</TeamText>
+                        <TeamText>{team.won}</TeamText>
                         <TeamText>{team.points}</TeamText>
                       </TeamView>
                     )
                   })}
                 </GroupView>
-              </Table>
+              </View>
             </View>
           )
         })}
-      </View>
+      </ScrollView>
     )
   } 
 
 }
 
 const GroupView = styled.View`
-  background: #6555DC;
-  shadow-color: #6555DC;
-  shadow-offset: 3px 6px;
+  background: #fff;
+  shadow-color: #000;
+  shadow-offset: 2px 2px;
   shadow-opacity: 0.8;
   shadow-radius: 2;
-  margin: 10px;
+  margin: 5px 10px;
   padding: 10px;
   border-radius: 6px;
 `
-
-const Table = styled.View``
-const TableHeader = styled.View``
-
-const TeamText = styled.Text`
-  color: #fff;
+const GroupHeaderText = styled.Text`
+  margin: 5px 10px;
   font-weight: 800;
 `
-
+const GroupHeader = styled.View`
+  flex-direction: row;
+  border-bottom-color: #eee;
+  border-bottom-width: 1px;
+`
+const TeamDummy = styled.Text`
+  flex-basis: 50%;
+  color: #000;
+  font-weight: 800;
+`
+const IconDummy = styled.View`
+  width: 26px;
+  height: 26px;
+  margin-right: 10px;
+`
+const GroupHeaderWLD = styled.Text`
+  font-weight: 800;
+  flex-basis: 10%;
+`
+const TeamText = styled.Text`
+  color: #000;
+  font-weight: 800;
+  flex-basis: 10%;
+`
+const TeamNameText = styled.Text`
+  color: #000;
+  font-weight: 800;
+  flex-basis: 50%;
+`
 const TeamView = styled.View`
   flex-direction: row;
-  margin: 5px 0;
-  justify-content: space-between;
+  align-items: center;
+  padding: 5px 0;
+  border-bottom-color: #eee;
+  border-bottom-width: 1px;
 `
-
 const Flag = styled.Image`
   width: 26px;
-  height: 25px;
+  height: 26px;
+  margin-right: 10px;
 `

@@ -95,17 +95,17 @@ export default class Fixtures extends Component {
 }
 
 const FixturesView = styled.View`
-  background: #E5E5E9;
+  background: #edeef2;
 `
 const FixturesScrollView = styled.ScrollView`
   padding: 0 10px;
 `
 const FixtureContainer = styled.View`
-  background: #6555DC;
+  background: #fff;
   border-radius: 6px;
   padding: 5px;
-  shadow-color: #6555DC;
-  shadow-offset: 3px 6px;
+  shadow-color: #000;
+  shadow-offset: 2px 2px;
   shadow-opacity: 0.8;
   shadow-radius: 2;
   margin-bottom: 10px;
@@ -116,7 +116,7 @@ const Date = styled.Text`
   font-weight: 800;
   padding: 10px 0;
   background: #eaeaea;
-  color: #21382C;
+  color: #000;
 `
 const Flag = styled.Image`
   width: 26px;
@@ -136,13 +136,13 @@ const FlexView = styled.View`
   flex-direction: row;
 `
 const TimeText = styled.Text`
-  color: #fff;
+  color: #000;
   flex-basis: 20%;
   font-weight: 800;
   font-size: 12px;
 `
 const TeamText = styled.Text`
-  color: #fff;
+  color: #000;
   padding: 10px;
   font-weight: 800;
   flex-basis: 32%;

@@ -33,26 +33,28 @@ export default class Fixtures extends Component {
 
     return (
       <ScrollView>
-        <FixtureHeaderView>
-        {
-          form.map((item, i) => {
-            return (
-              <View key={i}>
-                <CountryView>
-                  <Flag source={{uri: `https://raw.githubusercontent.com/Pau1fitz/world-cup/master/images/${item.team.toLowerCase().replace(/ /g,'')}.png`}}/>
-                    <ActiveTeam>
-                      <CountryName>{item.team}</CountryName>
-                    </ActiveTeam> 
-                </CountryView>
-              </View>
-            )
-          })
-        }
-        </FixtureHeaderView>
-        <FixtureDateContainer>
-            <FixtureDate>Group {group}</FixtureDate>
-            <FixtureDate>{date}</FixtureDate>
-        </FixtureDateContainer>
+        <FixtureHeaderContainer>
+          <FixtureHeaderView>
+          {
+            form.map((item, i) => {
+              return (
+                <View key={i}>
+                  <CountryView>
+                    <Flag source={{uri: `https://raw.githubusercontent.com/Pau1fitz/world-cup/master/images/${item.team.toLowerCase().replace(/ /g,'')}.png`}}/>
+                      <ActiveTeam>
+                        <CountryName>{item.team}</CountryName>
+                      </ActiveTeam> 
+                  </CountryView>
+                </View>
+              )
+            })
+          }
+          </FixtureHeaderView>
+          <View>
+              <FixtureDate>Group {group}</FixtureDate>
+              <FixtureDate>{date}</FixtureDate>
+          </View>
+        </FixtureHeaderContainer>
         {
           form.map(item => {
             return (
@@ -103,20 +105,20 @@ export default class Fixtures extends Component {
 
 const FixtureHeaderView = styled.View`
   justify-content: space-between;
-  background: #6555DC;
+  background: #fff;
   flex-direction: row;
-  padding: 10px;
   height: 50px;
+  margin: 10px;
 `
 const CountryView = styled.View`
   flex-direction: row;
   margin-bottom: 10px;
   padding-bottom: 5px;
 `
-const FixtureDateContainer = styled.View`
-  background: #6555DC;
-  shadow-color: #6555DC;
-  shadow-offset: 3px 6px;
+const FixtureHeaderContainer = styled.View`
+  background: #fff;
+  shadow-color: #000;
+  shadow-offset: 2px 2px;
   shadow-opacity: 0.8;
   shadow-radius: 2;
   padding-bottom: 12px;
@@ -124,9 +126,10 @@ const FixtureDateContainer = styled.View`
   border-bottom-right-radius: 6px;
 `
 const FixtureDate = styled.Text`
-  color: #fff;
+  color: #000;
   text-align: center;
   margin-bottom: 2px;
+  font-weight: 800;
 `
 const ActiveTeam = styled.View`
   flex-direction: row;
@@ -140,7 +143,7 @@ const CountryName = styled.Text`
   font-size: 18px;
   font-weight: 800;
   margin-top: 10px;
-  color: #fff;
+  color: #000;
 `
 const FormBox = styled.View`
   background: ${props => props.color};
@@ -154,8 +157,6 @@ const WhiteText = styled.Text`
   text-align: center;
 `
 const FormView = styled.View`
-  border-bottom-color: #fff;
-  border-bottom-width: 1;
   margin-bottom: 6px;
 `
 const ResultTextView = styled.View`
@@ -164,21 +165,21 @@ const ResultTextView = styled.View`
   align-items: center;
 `
 const ResultText = styled.Text`
-  color: #fff;
+  color: #000;
   font-size: 16px;
   font-weight: 800;
   padding: 10px 0;
 `
 const FormText = styled.Text`
-  color: #fff;
+  color: #000;
   font-size: 16px;
   font-weight: 800;
   padding: 10px 0;
 `
 const ResultView = styled.View`
-  background: #6555DC;
-  shadow-color: #6555DC;
-  shadow-offset: 3px 6px;
+  background: #fff;
+  shadow-color: #000;
+  shadow-offset: 2px 2px;
   shadow-opacity: 0.8;
   shadow-radius: 2;
   margin: 10px;
