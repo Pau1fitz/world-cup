@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, Image, TouchableHighlight, View, ScrollView } from 'react-native';
+import { Text, Image, TouchableWithoutFeedback, View, ScrollView } from 'react-native';
 import styled from 'styled-components';
 import moment from 'moment';
 
@@ -7,7 +7,7 @@ export default class Fixtures extends Component {
 
   static navigationOptions = {
     title: 'Fixtures'
-  };
+  }
   
   state = {
     fixtures: [],
@@ -43,10 +43,10 @@ export default class Fixtures extends Component {
         <FixturesScrollView>
           {
             result.map((f, i) => {
-        
+              const date = moment(f.date).format('ddd Do MMM')
               return (
-                <View>
-                  <Date>{moment(f.date).format('ddd Do MMM')}</Date>
+                <View key={i}>
+                  <Date>{date}</Date>
                   <FixtureContainer key={f.fixture}>
                   {
                     f.fixtures.map((f, i) => {
@@ -55,13 +55,14 @@ export default class Fixtures extends Component {
                       const logoAway = `https://raw.githubusercontent.com/Pau1fitz/world-cup/master/images/${fixtureText[1].toLowerCase().replace(/ /g,'')}.png`
                       
                       return (
-                        <TouchableHighlight
+                        <TouchableWithoutFeedback
                           key={i}
+                          activeOpacity={0.001}
                           onPress={() => {
                             this.props.navigation.navigate('Fixture', {
                             home: fixtureText[0],
                             away: fixtureText[1],
-                            date: f.kickOffTime
+                            date
                           });
                         }}
                       >
@@ -78,7 +79,7 @@ export default class Fixtures extends Component {
                             <Flag source={{uri: logoAway}}/>
                           </FlexView>
                         </FixtureTextContainer>
-                      </TouchableHighlight>
+                      </TouchableWithoutFeedback>
                       )
                     })
                   }

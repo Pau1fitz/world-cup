@@ -11,7 +11,8 @@ export default class Fixtures extends Component {
 
   state = {
     form: [],
-    team: this.props.navigation.getParam('home')
+    team: this.props.navigation.getParam('home'),
+    date: this.props.navigation.getParam('date'),
   }
 
   componentDidMount() {
@@ -28,26 +29,25 @@ export default class Fixtures extends Component {
   }
 
   changeTeam = (team) => {
-
     this.setState({
       team
     })
   }
   
   render() {
-    const { form, team } = this.state
-
+    const { form, team, date } = this.state
     const teamForm = form.filter(item => {
       return item.team === team 
     })
 
     return (
-      <FixtureView>
+      <ScrollView>
         <FixtureHeaderView>
         {
-          form.map(item => {
+          form.map((item, i) => {
+            
             return (
-              <View key={item.team}>
+              <View key={i}>
                 <CountryView>
                   <Flag source={{uri: `https://raw.githubusercontent.com/Pau1fitz/world-cup/master/images/${item.team.toLowerCase().replace(/ /g,'')}.png`}}/>
                   {
@@ -70,12 +70,18 @@ export default class Fixtures extends Component {
           })
         }
         </FixtureHeaderView>
-        <FormHeaderView>
-          <FormHeaderText>{team.toUpperCase()} FORM</FormHeaderText>
+        <FixtureDateContainer>
+            <FixtureDate>{date}</FixtureDate>
+        </FixtureDateContainer>
+
+
+        {/* this is next section */}
+        <View>
+          <Text>{team.toUpperCase()} FORM</Text>
           {
-            teamForm.map(item => {
+            teamForm.map((item, i) => {
               return (
-                <FormIconView key={item.team}>
+                <FormIconView key={i}>
                   {item.results.map((result, i) => {
                     const winLossDraw = result.form.replace(/"/g,"")
                     return (
@@ -100,8 +106,11 @@ export default class Fixtures extends Component {
               )
             })
           }
-        </FormHeaderView>
-        {
+        </View>
+
+
+
+        {/* {
           teamForm.map(item => {
             return (
               <View key={item.team}>
@@ -112,25 +121,10 @@ export default class Fixtures extends Component {
                   const month = date[1]
                   const year = date[2].split(' ')[0]
                   return (
-                    <View key={result.game}>
+                    <View key={result.date}>
                       <Date>{`${day}-${month}-${year}`}</Date>
                       <ResultView>
                         <ResultText>{result.game}</ResultText>
-                        {/* {winLossDraw === 'W' && (  
-                          <FormBox color={'#6dbb00'}>
-                            <WhiteText>W</WhiteText>
-                          </FormBox>
-                        )}
-                        {winLossDraw === 'L' && (
-                          <FormBox color={'#d6181f'}>
-                            <WhiteText>L</WhiteText>
-                          </FormBox>
-                        )}
-                        {winLossDraw === 'D' && (
-                          <FormBox color={'rgb(2, 2, 77)'}>
-                            <WhiteText>D</WhiteText>
-                          </FormBox>
-                        )} */}
                       </ResultView>
                     </View>
                   )
@@ -138,44 +132,41 @@ export default class Fixtures extends Component {
               </View>
             )
           })
-        }
-      </FixtureView>
+        } */}
+      </ScrollView>
     )
   }
 }
 
-const FixtureView = styled.ScrollView`
-  margin: 10px;
-`
 const FixtureHeaderView = styled.View`
-  flex-direction: row;
   justify-content: space-between;
-
+  background: #6555DC;
+  flex-direction: row;
+  padding: 10px;
+  height: 50px;
 `
 const CountryView = styled.View`
   flex-direction: row;
   margin-bottom: 10px;
   padding-bottom: 5px;
 `
-const FormIconView = styled.View`
-  flex-direction: row;
+const FixtureDateContainer = styled.View`
+  background: #6555DC;
+  shadow-color: #6555DC;
+  shadow-offset: 3px 6px;
+  shadow-opacity: 0.8;
+  shadow-radius: 2;
+  margin-bottom: 10px;
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
 `
-const FormHeaderView = styled.View`
-  border-bottom-width: 1;
-  border-bottom-color: #eee;
-  padding-bottom: 5px;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-`
-const FormHeaderText = styled.Text`
-  font-size: 16px;
-  font-weight: 800;
+const FixtureDate = styled.Text`
+  color: #fff;
+  margin: 10px 0;
+  text-align: center;
 `
 const ActiveTeam = styled.View`
   flex-direction: row;
-  margin-bottom: 10px;
-  border-bottom-width: 2;
 `
 const Flag = styled.Image`
   width: 40px;
@@ -186,30 +177,11 @@ const CountryName = styled.Text`
   font-size: 18px;
   font-weight: 800;
   margin-top: 10px;
-`
-const Date = styled.Text`
-  font-weight: normal;
-  font-size: 14px;
-  padding: 5px 0;
-  background: #eaeaea;
-  margin-bottom: 2px;
-`
-const ResultView = styled.View`
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-`
-const ResultText = styled.Text`
-  font-size: 16px;
-  font-weight: 800;
+  color: #fff;
 `
 const FormBox = styled.View`
   background: ${props => props.color};
   padding: 5px;
   width: 28px;
   margin-right: 5px;
-`
-const WhiteText = styled.Text`
-  color: #fff;
-  text-align: center;
 `
