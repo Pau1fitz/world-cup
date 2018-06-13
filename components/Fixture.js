@@ -81,7 +81,7 @@ export default class Fixtures extends Component {
           {
             teamForm.map((item, i) => {
               return (
-                <FormIconView key={i}>
+                <FormIconBox key={i}>
                   {item.results.map((result, i) => {
                     const winLossDraw = result.form.replace(/"/g,"")
                     return (
@@ -102,7 +102,7 @@ export default class Fixtures extends Component {
                     )
                    })
                   })
-                </FormIconView>
+                </FormIconBox>
               )
             })
           }
@@ -110,29 +110,29 @@ export default class Fixtures extends Component {
 
 
 
-        {/* {
+        {
           teamForm.map(item => {
             return (
-              <View key={item.team}>
+              <ResultView key={item.team}>
                 {item.results.map(result => {
-                  const winLossDraw = result.form.replace(/"/g,"")
+
                   const date = result.date.split('/')
                   const day = date[0]
                   const month = date[1]
                   const year = date[2].split(' ')[0]
                   return (
                     <View key={result.date}>
-                      <Date>{`${day}-${month}-${year}`}</Date>
-                      <ResultView>
+                      <ResultTextView>
                         <ResultText>{result.game}</ResultText>
-                      </ResultView>
+                        <ResultText>{`${day}-${month}-${year}`}</ResultText>
+                      </ResultTextView>
                     </View>
                   )
                 })}
-              </View>
+              </ResultView>
             )
           })
-        } */}
+        }
       </ScrollView>
     )
   }
@@ -184,4 +184,33 @@ const FormBox = styled.View`
   padding: 5px;
   width: 28px;
   margin-right: 5px;
+  border-radius: 14px;
+
+`
+const WhiteText = styled.Text`
+  color: #fff;
+  text-align: center;
+`
+const ResultTextView = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+`
+const ResultText = styled.Text`
+  color: #fff;
+  font-size: 16px;
+  font-weight: 800;
+  padding: 10px 0;
+`
+const ResultView = styled.View`
+  background: #6555DC;
+  shadow-color: #6555DC;
+  shadow-offset: 3px 6px;
+  shadow-opacity: 0.8;
+  shadow-radius: 2;
+  margin: 10px;
+  padding: 10px;
+  border-radius: 6px;
+`
+const FormIconBox = styled.View`
+  flex-direction: row;
 `
