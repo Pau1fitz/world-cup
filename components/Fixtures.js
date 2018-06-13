@@ -100,6 +100,7 @@ const FixtureTextContainer = styled.View`
   flex-direction: row;
   justify-content: center;
   width: 100%;
+  padding: 5px 0;
 `
 
 const FlexView = styled.View`

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, Image, View, ScrollView} from 'react-native'
+import { Text, Image, View, ScrollView, TouchableHighlight} from 'react-native'
 import styled from 'styled-components'
 import moment from 'moment'
 
@@ -10,7 +10,8 @@ export default class Fixtures extends Component {
   };
 
   state = {
-    form: []
+    form: [],
+    team: this.props.navigation.getParam('home')
   }
 
   componentDidMount() {
@@ -25,27 +26,83 @@ export default class Fixtures extends Component {
       console.warn(err) 
     })
   }
+
+  changeTeam = (team) => {
+
+    this.setState({
+      team
+    })
+  }
   
   render() {
-    const { form } = this.state
+    const { form, team } = this.state
+
+    const teamForm = form.filter(item => {
+      return item.team === team 
+    })
+
     return (
       <FixtureView>
-        <Test>
+        <FixtureHeaderView>
         {
           form.map(item => {
             return (
               <View key={item.team}>
                 <CountryView>
                   <Flag source={{uri: `https://raw.githubusercontent.com/Pau1fitz/world-cup/master/images/${item.team.toLowerCase().replace(/ /g,'')}.png`}}/>
-                  <CountryName>{item.team}</CountryName>
+                  {
+                    item.team === team && (
+                      <ActiveTeam>
+                        <CountryName>{item.team}</CountryName>   
+                      </ActiveTeam> 
+                    ) 
+                  }
+                  {
+                    item.team !== team && (
+                      <TouchableHighlight onPress={() => this.changeTeam(item.team)}>
+                        <CountryName>{item.team}</CountryName>   
+                      </TouchableHighlight> 
+                    ) 
+                  }
                 </CountryView>
               </View>
             )
           })
         }
-        </Test>
+        </FixtureHeaderView>
+        <FormHeaderView>
+          <FormHeaderText>{team.toUpperCase()} FORM</FormHeaderText>
+          {
+            teamForm.map(item => {
+              return (
+                <FormIconView key={item.team}>
+                  {item.results.map((result, i) => {
+                    const winLossDraw = result.form.replace(/"/g,"")
+                    return (
+                      winLossDraw === 'W' ? (
+                        <FormBox color={'#6dbb00'} key={i}>
+                          <WhiteText>W</WhiteText>
+                        </FormBox>
+                      ) :
+                      winLossDraw === 'L' ? (
+                        <FormBox color={'#d6181f'} key={i}>
+                          <WhiteText>L</WhiteText>
+                        </FormBox>
+                      ) : (
+                        <FormBox color={'rgb(2, 2, 77)'} key={i}>
+                          <WhiteText>D</WhiteText>
+                        </FormBox>
+                      )
+                    )
+                   })
+                  })
+                </FormIconView>
+              )
+            })
+          }
+        </FormHeaderView>
         {
-          form.map(item => {
+          teamForm.map(item => {
             return (
               <View key={item.team}>
                 {item.results.map(result => {
@@ -56,24 +113,24 @@ export default class Fixtures extends Component {
                   const year = date[2].split(' ')[0]
                   return (
                     <View key={result.game}>
-                        <Date>{`${day}-${month}-${year}`}</Date>
+                      <Date>{`${day}-${month}-${year}`}</Date>
                       <ResultView>
                         <ResultText>{result.game}</ResultText>
-                        {winLossDraw === 'W' && (
-                          <WinBox>
+                        {/* {winLossDraw === 'W' && (  
+                          <FormBox color={'#6dbb00'}>
                             <WhiteText>W</WhiteText>
-                          </WinBox>
+                          </FormBox>
                         )}
                         {winLossDraw === 'L' && (
-                          <LossBox>
+                          <FormBox color={'#d6181f'}>
                             <WhiteText>L</WhiteText>
-                          </LossBox>
+                          </FormBox>
                         )}
                         {winLossDraw === 'D' && (
-                          <DrawBox>
+                          <FormBox color={'rgb(2, 2, 77)'}>
                             <WhiteText>D</WhiteText>
-                          </DrawBox>
-                        )}
+                          </FormBox>
+                        )} */}
                       </ResultView>
                     </View>
                   )
@@ -90,23 +147,45 @@ export default class Fixtures extends Component {
 const FixtureView = styled.ScrollView`
   margin: 10px;
 `
-const Test = styled.View`
+const FixtureHeaderView = styled.View`
   flex-direction: row;
   justify-content: space-between;
+
 `
 const CountryView = styled.View`
   flex-direction: row;
-  align-items: center;
   margin-bottom: 10px;
+  padding-bottom: 5px;
+`
+const FormIconView = styled.View`
+  flex-direction: row;
+`
+const FormHeaderView = styled.View`
+  border-bottom-width: 1;
+  border-bottom-color: #eee;
+  padding-bottom: 5px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+`
+const FormHeaderText = styled.Text`
+  font-size: 16px;
+  font-weight: 800;
+`
+const ActiveTeam = styled.View`
+  flex-direction: row;
+  margin-bottom: 10px;
+  border-bottom-width: 2;
 `
 const Flag = styled.Image`
   width: 40px;
   height: 40px;
+  margin-right: 10px;
 `
 const CountryName = styled.Text`
   font-size: 18px;
   font-weight: 800;
-  margin-left: 10px;
+  margin-top: 10px;
 `
 const Date = styled.Text`
   font-weight: normal;
@@ -124,23 +203,11 @@ const ResultText = styled.Text`
   font-size: 16px;
   font-weight: 800;
 `
-const WinBox = styled.View`
-  background: #6dbb00;
+const FormBox = styled.View`
+  background: ${props => props.color};
   padding: 5px;
   width: 28px;
-  border-radius: 14px;
-`
-const LossBox = styled.View`
-  background: #d6181f;
-  padding: 5px;
-  width: 28px;
-  border-radius: 14px;
-`
-const DrawBox = styled.View`
-  background: rgb(2, 2, 77);
-  padding: 5px;
-  width: 28px;
-  border-radius: 14px;
+  margin-right: 5px;
 `
 const WhiteText = styled.Text`
   color: #fff;
