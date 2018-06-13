@@ -30,92 +30,123 @@ export default class Fixtures extends Component {
   render() {
 
     const { fixtures } = this.state;
+
+    const result = Object.values(fixtures.reduce((c, v) => {
+      let t = v['kickOffTime'].split('T', 1)[0];
+      c[t] = c[t] || {date: t,fixtures: []}
+      c[t].fixtures.push(v);
+      return c;
+    }, {}));
+
     return (
       <FixturesView>
-        <ScrollView>
-          {fixtures.map((f, i) => {
-            const fixtureText = f.fixture.trim().split(' v ')
-            const logoHome = `https://raw.githubusercontent.com/Pau1fitz/world-cup/master/images/${fixtureText[0].toLowerCase().replace(/ /g,'')}.png`
-            const logoAway = `https://raw.githubusercontent.com/Pau1fitz/world-cup/master/images/${fixtureText[1].toLowerCase().replace(/ /g,'')}.png`
-            return (
-              <View key={f.fixture}>
-                {i == 0 && (
-                  <Date>{moment(f.kickOffTime).format('ddd Do MMM')}</Date>
-                )}
-                {i != 0 && moment(fixtures[i].kickOffTime).format('ddd Do MMM') != moment(fixtures[i - 1].kickOffTime).format('ddd Do MMM')  && (
-                  <Date>{moment(f.kickOffTime).format('ddd Do MMM')}</Date>
-                )}
-                <TouchableHighlight
-                  onPress={() => {
-                    this.props.navigation.navigate('Fixture', {
-                      home: fixtureText[0],
-                      away: fixtureText[1],
-                    });
-                  }}
-                >
-                  <FixtureTextContainer>
-                    <FlexView>
-                      <Flag source={{uri: logoHome}}/>
-                      <TeamText>{fixtureText[0]}</TeamText>
-                    </FlexView>
-                    <FlexView>
-                      <FixtureText>{moment(f.kickOffTime).format('HH:mm')}</FixtureText>
-                    </FlexView>
-                    <FlexView>
-                      <TeamText>{fixtureText[1]}</TeamText>
-                      <Flag source={{uri: logoAway}}/>
-                    </FlexView>
-                  </FixtureTextContainer>
-                </TouchableHighlight>
-              </View>
-            )
-          })}
-        </ScrollView>
+        <FixturesScrollView>
+          {
+            result.map((f, i) => {
+        
+              return (
+                <View>
+                  <Date>{moment(f.date).format('ddd Do MMM')}</Date>
+                  <FixtureContainer key={f.fixture}>
+                  {
+                    f.fixtures.map((f, i) => {
+                      const fixtureText = f.fixture.trim().split(' v ')
+                      const logoHome = `https://raw.githubusercontent.com/Pau1fitz/world-cup/master/images/${fixtureText[0].toLowerCase().replace(/ /g,'')}.png`
+                      const logoAway = `https://raw.githubusercontent.com/Pau1fitz/world-cup/master/images/${fixtureText[1].toLowerCase().replace(/ /g,'')}.png`
+                      
+                      return (
+                        <TouchableHighlight
+                          key={i}
+                          onPress={() => {
+                            this.props.navigation.navigate('Fixture', {
+                            home: fixtureText[0],
+                            away: fixtureText[1],
+                            date: f.kickOffTime
+                          });
+                        }}
+                      >
+                      <FixtureTextContainer>
+                          <FlexView>
+                            <Flag source={{uri: logoHome}}/>
+                            <TeamText align={'left'}>{fixtureText[0]}</TeamText>
+                          </FlexView>
+                          <FlexView>
+                            <TimeText>{moment(f.kickOffTime).format('HH:mm')}</TimeText>
+                          </FlexView>
+                          <FlexView>
+                            <TeamText align={'right'}>{fixtureText[1]}</TeamText>
+                            <Flag source={{uri: logoAway}}/>
+                          </FlexView>
+                        </FixtureTextContainer>
+                      </TouchableHighlight>
+                      )
+                    })
+                  }
+                  </FixtureContainer>
+                </View>
+          
+              )
+            })
+          }
+        </FixturesScrollView>
       </FixturesView>
     )
   }
 }
 
 const FixturesView = styled.View`
-  background: #eee;
+  background: #E5E5E9;
 `
-
+const FixturesScrollView = styled.ScrollView`
+  padding: 0 10px;
+`
+const FixtureContainer = styled.View`
+  background: #6555DC;
+  border-radius: 6px;
+  padding: 5px;
+  shadow-color: #6555DC;
+  shadow-offset: 3px 6px;
+  shadow-opacity: 0.8;
+  shadow-radius: 2;
+  margin-bottom: 10px;
+`
 const Date = styled.Text`
   font-weight: normal;
-  font-size: 16px;
-  text-align: center;
-  padding: 5px 0;
+  font-size: 14px;
+  font-weight: 800;
+  padding: 10px 0;
   background: #eaeaea;
-  margin-bottom: 2px;
+  color: #21382C;
 `
-
 const Flag = styled.Image`
-  width: 20px;
-  height: 20px;
+  width: 26px;
+  height: 25px;
   align-self: center;
 `
-
 const FixtureTextContainer = styled.View`
   display: flex;
   flex-direction: row;
   justify-content: center;
+  align-items: center;
   width: 100%;
   padding: 5px 0;
 `
-
 const FlexView = styled.View`
   display: flex;
   flex-direction: row;
 `
-const FixtureText = styled.Text`
-  color: rgb(51, 51, 51);
-  padding: 10px;
+const TimeText = styled.Text`
+  color: #fff;
   flex-basis: 20%;
+  font-weight: 800;
+  font-size: 12px;
 `
-
 const TeamText = styled.Text`
-  color: rgb(51, 51, 51);
+  color: #fff;
   padding: 10px;
   font-weight: 800;
   flex-basis: 32%;
+  font-size: 14px;
+  text-align: ${props => props.align};
 `
+
