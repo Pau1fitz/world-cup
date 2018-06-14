@@ -13,15 +13,17 @@ export default class Fixtures extends Component {
     team: this.props.navigation.getParam('home'),
     date: this.props.navigation.getParam('date'),
     group: this.props.navigation.getParam('group'),
+    loading: true
   }
 
   componentDidMount() {
     const { navigation } = this.props
-    fetch(`http://localhost:5000/form/${navigation.getParam('home')}/${navigation.getParam('away')}`).then(res => {
+    fetch(`https://ancient-crag-17390.herokuapp.com/form/${navigation.getParam('home')}/${navigation.getParam('away')}`).then(res => {
       return res.json()
-    }).then(res => {
+    }).then(form => {
       this.setState({
-        form: res
+        form,
+        loading: false
       })
     }).catch(err => {
       console.warn(err) 
@@ -29,7 +31,11 @@ export default class Fixtures extends Component {
   }
   
   render() {
-    const { form, date, group } = this.state
+    const { form, date, group, loading } = this.state
+
+    if(loading || form.length === 0) {
+      return <Loading />;
+    }
 
     return (
       <ScrollView>

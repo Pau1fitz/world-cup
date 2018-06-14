@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Text, Image, View, ScrollView, TouchableHighlight} from 'react-native'
+import Loading from './Loading'
 import styled from 'styled-components'
 import moment from 'moment'
 
@@ -10,15 +11,17 @@ export default class Groups extends Component {
   };
 
   state = {
-    groups: []
+    groups: [],
+    loading: true
   }
 
   componentDidMount() {
-    fetch(`http://localhost:5000/groups`).then(res => {
+    fetch(`https://ancient-crag-17390.herokuapp.com/groups`).then(res => {
       return res.json()
-    }).then(res => {
+    }).then(groups => {
       this.setState({
-        groups: res
+        groups,
+        loading: false
       })
     }).catch(err => {
       console.warn(err) 
@@ -27,7 +30,12 @@ export default class Groups extends Component {
 
   render() {
     
-    const {groups} = this.state
+    const { groups, loading } = this.state
+
+    if(loading || groups.length === 0) {
+      return <Loading />;
+    }
+
     return(
       <ScrollView>
         {groups.map(group => {
@@ -104,7 +112,7 @@ const GroupHeaderWLD = styled.Text`
 const TeamText = styled.Text`
   color: #000;
   font-weight: 800;
-  flex-basis: 10%;
+  flex-basis: 11%;
 `
 const TeamNameText = styled.Text`
   color: #000;

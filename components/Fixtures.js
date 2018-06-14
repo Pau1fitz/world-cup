@@ -1,7 +1,8 @@
-import React, { Component } from 'react';
-import { Text, Image, TouchableWithoutFeedback, View, ScrollView } from 'react-native';
-import styled from 'styled-components';
-import moment from 'moment';
+import React, { Component } from 'react'
+import { Text, Image, TouchableWithoutFeedback, View, ScrollView } from 'react-native'
+import Loading from './Loading'
+import styled from 'styled-components'
+import moment from 'moment'
 
 export default class Fixtures extends Component {
 
@@ -12,15 +13,17 @@ export default class Fixtures extends Component {
   state = {
     fixtures: [],
     teams: [],
-    showFixture: false
+    showFixture: false,
+    loading: true
   }
 
   componentDidMount() {
-    fetch('http://localhost:5000/group-fixtures').then(res => {
+    fetch('https://ancient-crag-17390.herokuapp.com/group-fixtures').then(res => {
       return res.json()
-    }).then(res => {
+    }).then(fixtures => {
       this.setState({
-        fixtures: res
+        fixtures,
+        loading: false
       })
     }).catch(err => {
       console.warn(err) 
@@ -28,13 +31,18 @@ export default class Fixtures extends Component {
   }
 
   render() {
-    const { fixtures } = this.state;
+    const { fixtures, loading } = this.state;
+    
     const result = Object.values(fixtures.reduce((c, v) => {
       let t = v['kickOffTime'].split('T', 1)[0];
       c[t] = c[t] || {date: t,fixtures: []}
       c[t].fixtures.push(v);
       return c;
     }, {}));
+
+    if(loading || fixtures.length === 0) {
+      return <Loading />;
+    }
 
     return (
       <FixturesView>

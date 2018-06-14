@@ -3,6 +3,8 @@ import { Button, View, Text, Image } from 'react-native'
 import Fixtures from './components/Fixtures'
 import Fixture from './components/Fixture'
 import Groups from './components/Groups'
+import Headlines from './components/Headlines'
+import List from './components/ListHOC'
 import { createStackNavigator } from 'react-navigation'
 import styled from 'styled-components'
 
@@ -31,12 +33,15 @@ class HomeScreen extends Component {
           />
           <Button
             title="Top Scorers"
-            onPress={() => this.props.navigation.navigate('Groups')}
+            onPress={() => this.props.navigation.navigate('TopScorers')}
           />
-
+          <Button
+            title="Top Assists"
+            onPress={() => this.props.navigation.navigate('TopAssists')}
+          />
           <Button
             title="Headlines"
-            onPress={() => this.props.navigation.navigate('Groups')}
+            onPress={() => this.props.navigation.navigate('Headlines')}
           />
         </View>
       </View>
@@ -50,6 +55,9 @@ const RootStack = createStackNavigator(
     Fixtures: Fixtures,
     Fixture: Fixture,
     Groups: Groups,
+    Headlines: Headlines,
+    TopScorers: List('Top Scorers', 'https://ancient-crag-17390.herokuapp.com/top-scorers'),
+    TopAssists: List('Top Assists', 'https://ancient-crag-17390.herokuapp.com/top-assists'),
   },
   {
     initialRouteName: 'Home',
