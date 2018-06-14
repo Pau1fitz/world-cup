@@ -33,7 +33,7 @@ export default class Headlines extends Component {
     const { headlines, loading } = this.state
 
     if(loading || headlines.length === 0) {
-      return <Loading />;
+      return <Loading />
     }
     
     return(

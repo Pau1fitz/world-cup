@@ -33,7 +33,7 @@ export default class Groups extends Component {
     const { groups, loading } = this.state
 
     if(loading || groups.length === 0) {
-      return <Loading />;
+      return <Loading />
     }
 
     return(

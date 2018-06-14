@@ -31,7 +31,7 @@ export default class Fixtures extends Component {
   }
 
   render() {
-    const { fixtures, loading } = this.state;
+    const { fixtures, loading } = this.state
     
     const result = Object.values(fixtures.reduce((c, v) => {
       let t = v['kickOffTime'].split('T', 1)[0];
@@ -41,7 +41,7 @@ export default class Fixtures extends Component {
     }, {}));
 
     if(loading || fixtures.length === 0) {
-      return <Loading />;
+      return <Loading />
     }
 
     return (

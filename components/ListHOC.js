@@ -1,7 +1,7 @@
 import React, { Component } from 'react' 
 import { View, Text } from 'react-native'
 import Loading from './Loading'
-import styled from 'styled-components';
+import styled from 'styled-components'
 
 export default HOCList = (title, api) => {
   return class List extends Component {
@@ -28,7 +28,7 @@ export default HOCList = (title, api) => {
       const { items, loading } = this.state
 
       if(loading || items.length === 0) {
-        return <Loading />;
+        return <Loading />
       }
       
       return (

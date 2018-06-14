@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Text, Image, View, ScrollView, TouchableHighlight} from 'react-native'
 import styled from 'styled-components'
+import Loading from './Loading'
 
 export default class Fixtures extends Component {
 
@@ -34,7 +35,7 @@ export default class Fixtures extends Component {
     const { form, date, group, loading } = this.state
 
     if(loading || form.length === 0) {
-      return <Loading />;
+      return <Loading />
     }
 
     return (
