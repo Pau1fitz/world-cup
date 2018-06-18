@@ -25,7 +25,7 @@ class HomeScreen extends Component {
         <View style={{ alignItems: 'center', justifyContent: 'center' }}>
           <Button
             title="Fixtures"
-            onPress={() => this.props.navigation.navigate('Fixtures')}
+            onPress={() => this.props.navigation.navigate('Fixtures and Results')}
           />
           <Button
             title="Groups"
@@ -56,8 +56,8 @@ const RootStack = createStackNavigator(
     Fixture: Fixture,
     Groups: Groups,
     Headlines: Headlines,
-    TopScorers: List('Top Scorers', 'https://ancient-crag-17390.herokuapp.com/top-scorers'),
-    TopAssists: List('Top Assists', 'https://ancient-crag-17390.herokuapp.com/top-assists'),
+    TopScorers: List('Top Scorers', 'https://world-cup-russia.herokuapp.com/top-scorers'),
+    TopAssists: List('Top Assists', 'https://world-cup-russia.herokuapp.com/top-assists'),
   },
   {
     initialRouteName: 'Home',

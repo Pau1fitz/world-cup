@@ -16,7 +16,7 @@ export default class Groups extends Component {
   }
 
   componentDidMount() {
-    fetch(`https://ancient-crag-17390.herokuapp.com/groups`).then(res => {
+    fetch(`https://world-cup-russia.herokuapp.com/groups`).then(res => {
       return res.json()
     }).then(groups => {
       this.setState({

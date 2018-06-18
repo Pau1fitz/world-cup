@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, Image, View, ScrollView, TouchableHighlight} from 'react-native'
+import { Text, Image, View, ScrollView, TouchableHighlight, Linking } from 'react-native'
 import Loading from './Loading'
 import styled from 'styled-components'
 import moment from 'moment'
@@ -16,7 +16,7 @@ export default class Headlines extends Component {
   }
 
   componentDidMount() {
-    fetch(`https://ancient-crag-17390.herokuapp.com/headlines`).then(res => {
+    fetch(`https://world-cup-russia.herokuapp.com/headlines`).then(res => {
       return res.json()
     }).then(headlines => {
       this.setState({
@@ -40,13 +40,14 @@ export default class Headlines extends Component {
       <ScrollView>
         {
          headlines.map(h => {
+           console.log(h)
            return (
              <HeadlineContainer key={h._id}>
               <View>
                 <HeadlineImage source={{uri: h.image}} />
               </View>
               <HeadlineTextContainer>
-                <HeadlineText>{h.headline}</HeadlineText>
+                <Text>{h.headline}</Text>
                 <Text>{h.snippet}</Text>
               </HeadlineTextContainer>
              </HeadlineContainer>

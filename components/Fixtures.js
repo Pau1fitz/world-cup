@@ -7,7 +7,7 @@ import moment from 'moment'
 export default class Fixtures extends Component {
 
   static navigationOptions = {
-    title: 'Fixtures'
+    title: 'Fixtures and Results'
   }
   
   state = {
@@ -18,7 +18,7 @@ export default class Fixtures extends Component {
   }
 
   componentDidMount() {
-    fetch('https://ancient-crag-17390.herokuapp.com/group-fixtures').then(res => {
+    fetch('https://world-cup-russia.herokuapp.com/group-fixtures').then(res => {
       return res.json()
     }).then(fixtures => {
       this.setState({

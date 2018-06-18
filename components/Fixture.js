@@ -19,7 +19,7 @@ export default class Fixtures extends Component {
 
   componentDidMount() {
     const { navigation } = this.props
-    fetch(`https://ancient-crag-17390.herokuapp.com/form/${navigation.getParam('home')}/${navigation.getParam('away')}`).then(res => {
+    fetch(`https://world-cup-russia.herokuapp.com/form/${navigation.getParam('home')}/${navigation.getParam('away')}`).then(res => {
       return res.json()
     }).then(form => {
       this.setState({
