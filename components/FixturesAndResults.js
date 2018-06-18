@@ -4,7 +4,7 @@ import Loading from './Loading'
 import styled from 'styled-components'
 import moment from 'moment'
 
-export default class Fixtures extends Component {
+export default class FixturesAndResults extends Component {
 
   static navigationOptions = {
     title: 'Fixtures and Results'
@@ -56,11 +56,27 @@ export default class Fixtures extends Component {
                   <FixtureContainer key={f.fixture}>
                   {
                     f.fixtures.map((f, i) => {
-                      const fixtureText = f.fixture.trim().split(' v ')
-                      const logoHome = `https://raw.githubusercontent.com/Pau1fitz/world-cup/master/images/${fixtureText[0].toLowerCase().replace(/ /g,'')}.png`
-                      const logoAway = `https://raw.githubusercontent.com/Pau1fitz/world-cup/master/images/${fixtureText[1].toLowerCase().replace(/ /g,'')}.png`
+                      let homeScore = null;
+                      let awayScore = null;
+                      let fixtureText = f.fixture.trim().split(' v ')
+                      
                       const group = f.group
 
+                      let result = fixtureText.join('').split('(')
+                      if(result.length > 1) {
+                        result = result[1].replace(')', '')
+                      }
+
+                      if( typeof result === 'string') {
+                        homeScore = result.split('-')[0]
+                        awayScore = result.split('-')[1]
+                        fixtureText = fixtureText.map(item => {
+                          return item.replace(/ *\([^)]*\) */g, "");
+                        })
+                      }
+
+                      const logoHome = `https://raw.githubusercontent.com/Pau1fitz/world-cup/master/images/${fixtureText[0].toLowerCase().replace(/ /g,'')}.png`
+                      const logoAway = `https://raw.githubusercontent.com/Pau1fitz/world-cup/master/images/${fixtureText[1].toLowerCase().replace(/ /g,'')}.png`
                       return (
                         <TouchableWithoutFeedback
                           key={i}
@@ -79,14 +95,19 @@ export default class Fixtures extends Component {
                             <Flag source={{uri: logoHome}}/>
                             <TeamText align={'left'}>{fixtureText[0]}</TeamText>
                           </FlexView>
-                          <FlexView>
-                            <TimeText>{moment(f.kickOffTime).format('HH:mm')}</TimeText>
-                          </FlexView>
+                          <TimeView>
+                            {homeScore ? (
+                              <TimeText>{homeScore} - {awayScore}</TimeText>
+                            ) : (
+                              <TimeText>{moment(f.kickOffTime).format('HH:mm')}</TimeText>
+                            )}
+                          </TimeView>
                           <FlexView>
                             <TeamText align={'right'}>{fixtureText[1]}</TeamText>
                             <Flag source={{uri: logoAway}}/>
                           </FlexView>
                         </FixtureTextContainer>
+                        
                       </TouchableWithoutFeedback>
                       )
                     })
@@ -143,6 +164,10 @@ const FlexView = styled.View`
   display: flex;
   flex-direction: row;
 `
+const TimeView = styled.View`
+  display: flex;
+  flex-direction: column;
+`
 const TimeText = styled.Text`
   color: #000;
   flex-basis: 20%;
@@ -157,4 +182,3 @@ const TeamText = styled.Text`
   font-size: 14px;
   text-align: ${props => props.align};
 `
-

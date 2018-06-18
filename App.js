@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Button, View, Text, Image, TouchableWithoutFeedback } from 'react-native'
-import Fixtures from './components/Fixtures'
+import FixturesAndResults from './components/FixturesAndResults'
 import Fixture from './components/Fixture'
 import Groups from './components/Groups'
 import Headlines from './components/Headlines'
@@ -23,7 +23,7 @@ class HomeScreen extends Component {
         </Header>
         <Menu>
           <ButtonContainer>
-            <TouchableWithoutFeedback onPress={() => this.props.navigation.navigate('Fixtures')}>
+            <TouchableWithoutFeedback onPress={() => this.props.navigation.navigate('FixturesAndResults')}>
               <HomeText>Fixtures & Results</HomeText>
             </TouchableWithoutFeedback>
           </ButtonContainer>
@@ -56,7 +56,7 @@ class HomeScreen extends Component {
 const RootStack = createStackNavigator(
   {
     Home: HomeScreen,
-    Fixtures: Fixtures,
+    FixturesAndResults: FixturesAndResults,
     Fixture: Fixture,
     Groups: Groups,
     Headlines: Headlines,
