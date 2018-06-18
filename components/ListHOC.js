@@ -1,5 +1,5 @@
 import React, { Component } from 'react' 
-import { View, Text } from 'react-native'
+import { View, ScrollView, Text } from 'react-native'
 import Loading from './Loading'
 import styled from 'styled-components'
 
@@ -51,7 +51,7 @@ export default HOCList = (title, api) => {
   }
 }
 
-const ItemContainer = styled.View`
+const ItemContainer = styled.ScrollView`
   background: #fff;
   border-radius: 6px;
   padding: 5px;
@@ -78,12 +78,10 @@ const ItemPosition = styled.Text`
   padding: 10px;
   font-weight: 800;
   font-size: 14px;
-  width: 20px;
 `
 const ItemText = styled.Text`
   color: #000;
   padding: 10px;
   font-weight: 800;
   font-size: 14px;
-  flex-basis: 38%;
 `

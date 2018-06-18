@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, View, Text, Image } from 'react-native'
+import { Button, View, Text, Image, TouchableWithoutFeedback } from 'react-native'
 import Fixtures from './components/Fixtures'
 import Fixture from './components/Fixture'
 import Groups from './components/Groups'
@@ -15,36 +15,40 @@ class HomeScreen extends Component {
 
   render() {
     return (
-      <View>
+      <HomeView>
         <Header>
           <Logo
             source={require('./images/WC.png')}
             />
-          <FIFAText>FIFA 2018</FIFAText>
         </Header>
-        <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-          <Button
-            title="Fixtures"
-            onPress={() => this.props.navigation.navigate('Fixtures and Results')}
-          />
-          <Button
-            title="Groups"
-            onPress={() => this.props.navigation.navigate('Groups')}
-          />
-          <Button
-            title="Top Scorers"
-            onPress={() => this.props.navigation.navigate('TopScorers')}
-          />
-          <Button
-            title="Top Assists"
-            onPress={() => this.props.navigation.navigate('TopAssists')}
-          />
-          <Button
-            title="Headlines"
-            onPress={() => this.props.navigation.navigate('Headlines')}
-          />
-        </View>
-      </View>
+        <Menu>
+          <ButtonContainer>
+            <TouchableWithoutFeedback onPress={() => this.props.navigation.navigate('Fixtures')}>
+              <HomeText>Fixtures & Results</HomeText>
+            </TouchableWithoutFeedback>
+          </ButtonContainer>
+          <ButtonContainer>
+            <TouchableWithoutFeedback onPress={() => this.props.navigation.navigate('Groups')}>
+              <HomeText>Groups</HomeText>
+            </TouchableWithoutFeedback>
+          </ButtonContainer>
+          <ButtonContainer>
+            <TouchableWithoutFeedback onPress={() => this.props.navigation.navigate('TopScorers')}>
+              <HomeText>Top Scorers</HomeText>
+            </TouchableWithoutFeedback>
+          </ButtonContainer>
+          <ButtonContainer>
+            <TouchableWithoutFeedback onPress={() => this.props.navigation.navigate('TopAssists')}>
+              <HomeText>Top Assists</HomeText>
+            </TouchableWithoutFeedback>
+          </ButtonContainer>
+          <ButtonContainer>
+            <TouchableWithoutFeedback onPress={() => this.props.navigation.navigate('Headlines')}>
+              <HomeText>Headlines</HomeText>
+            </TouchableWithoutFeedback>
+          </ButtonContainer>
+        </Menu>
+      </HomeView>
     );
   }
 }
@@ -81,13 +85,32 @@ export default class App extends React.Component {
 
 const Header = styled.View`
   flex-direction: row;
-  align-items: center;
 `
-const FIFAText = styled.Text`
-  font-weight: 800;
-  margin-left: -5px;
+const HomeView = styled.View`
+  flex-direction: row;
+  margin-top: 25px;
 `
 const Logo = styled.Image`
   width: 100px;
   height: 100px;
+`
+const Menu = styled.View`
+  background: #fff;
+  shadow-color: #000;
+  shadow-offset: 2px 2px;
+  shadow-opacity: 0.8;
+  shadow-radius: 2;
+  margin: 5px 10px;
+  padding: 10px;
+  border-radius: 6px;
+  flex: 1;
+  justify-content: center;
+`
+const ButtonContainer = styled.View`
+  border-bottom-color: #eee;
+  border-bottom-width: 1px;
+`
+const HomeText = styled.Text`
+  font-size: 14px;
+  padding: 10px 0;
 `

@@ -40,14 +40,16 @@ export default class Headlines extends Component {
       <ScrollView>
         {
          headlines.map(h => {
-           console.log(h)
+           console.log(h.image)
            return (
              <HeadlineContainer key={h._id}>
               <View>
-                <HeadlineImage source={{uri: h.image}} />
+                <HeadlineImage source={{uri: h.image.replace('http', 'https')}} />
               </View>
               <HeadlineTextContainer>
-                <Text>{h.headline}</Text>
+                <HeadlineText onPress={() => Linking.openURL(h.link)}>
+                  {h.headline}
+                </HeadlineText>
                 <Text>{h.snippet}</Text>
               </HeadlineTextContainer>
              </HeadlineContainer>
@@ -58,6 +60,7 @@ export default class Headlines extends Component {
     )
   } 
 }
+
 const HeadlineText = styled.Text`
   font-size: 16px;
   font-weight: 800;
